@@ -1,0 +1,15 @@
+# FinTS-Brücke für "Meine Finanzen" (Code: github.com/JGHosting/mymoney, Ordner server/)
+# Das Image wird von GitHub fertig für den Raspberry Pi gebaut.
+services:
+  bridge:
+    image: ghcr.io/jghosting/mymoney-bridge:latest
+    container_name: finanzen-bridge
+    env_file: .env
+    volumes:
+      - ./data:/data
+    networks: [web]
+    restart: unless-stopped
+
+networks:
+  web:
+    external: true

@@ -1,0 +1,22 @@
+# Ein Block pro Projekt: Pfad → Container im Netz "web".
+# Nach Änderungen:  docker compose -f /srv/proxy/docker-compose.yml restart caddy
+{
+	auto_https off
+	admin off
+}
+
+:8080 {
+	# FinTS-Brücke für "Meine Finanzen"
+	handle_path /finanzen/* {
+		reverse_proxy finanzen-bridge:8787
+	}
+
+	# Neues Projekt: so ergänzen
+	# handle_path /projekt2/* {
+	# 	reverse_proxy projekt2-app:3000
+	# }
+
+	handle {
+		respond "homeserver" 200
+	}
+}

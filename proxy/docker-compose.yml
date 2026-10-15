@@ -1,0 +1,18 @@
+# Zentraler Eingang: Caddy verteilt Anfragen anhand des Pfades an die Projekte.
+# Nur lokal gebunden – nach außen geht es ausschließlich über Tailscale (HTTPS).
+services:
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+    networks: [web]
+    restart: unless-stopped
+
+networks:
+  web:
+    external: true
+volumes:
+  caddy-data:
